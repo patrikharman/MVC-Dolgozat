@@ -1,29 +1,26 @@
-class Autok {
+export default class autoNezet {
     constructor() {
-        this.autoLista = document.getElementById('auto-lista');
+        this.autoListaElem = document.getElementById('auto-lista');
     }
 
-    updateList(autok) {
-        this.autoLista.innerHTML = ''; 
+
+    megjelenitAutok(autok, torlesKezelo) {
+        this.autoListaElem.innerHTML = ''; 
 
         autok.forEach(auto => {
-            const listaElem = document.createElement('li');
-            listaElem.innerHTML = `
-                ${auto.marka} ${auto.tipus} (${auto.evjarat}) - Darabszám: ${auto.darabszam}
-                <button data-id="${auto.id}">Törlés</button>
+            const li = document.createElement('li');
+            li.innerHTML = `
+                ${auto.nev} - Szín: ${auto.szin} - Darabszám: ${auto.darabszam} - Kép: ${auto.kep}
+                <button class="torles-gomb" data-id="${auto.id}">Törlés</button>
             `;
-            this.autoLista.appendChild(listaElem);
+            this.autoListaElem.appendChild(li);
         });
 
-        this.attachDeleteEvent();
-    }
-
-    attachDeleteEvent() {
-        const gombok = this.autoLista.querySelectorAll('button');
-        gombok.forEach(gomb => {
-            gomb.addEventListener('click', () => {
-                const id = parseInt(gomb.getAttribute('data-id'));
-                this.onDeleteAuto(id);
+        
+        document.querySelectorAll('.torles-gomb').forEach(gomb => {
+            gomb.addEventListener('click', esemeny => {
+                const autoId = parseInt(esemeny.target.dataset.id);
+                torlesKezelo(autoId); 
             });
         });
     }

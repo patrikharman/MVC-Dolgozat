@@ -1,21 +1,28 @@
 import Modell from "../modell/Modell.js";
 import Autok from "..view/Autok.js";
 
-export default class AutoController {
-    constructor(model, view) {
-        this.model = model;
+export default class autoController {
+    constructor(autoLista, view) {
+        this.autoLista = autoLista;
         this.view = view;
 
-        this.view.onDeleteAuto = this.handleDeleteAuto.bind(this);
-        this.updateView();
+        this.view.torlesGombKattintasra((id) => {
+            this.autoLista.torol(id);
+            this.view.frissit(this.autoLista.getAutok());
+        });
     }
 
-    updateView() {
-        this.view.updateList(this.model.getAutok());
-    }
-
-    handleDeleteAuto(id) {
-        this.model.torol(id);
-        this.updateView();
+    init() {
+        this.view.frissit(this.autoLista.getAutok());
     }
 }
+
+
+
+#esemenykezelo(){
+    $(window).on("katt",(event)=>{
+       this.tttModell.lepteto(event.detail);
+       new Palya(tttModell.getList(),this.taroloElem);
+    })
+    }
+    
